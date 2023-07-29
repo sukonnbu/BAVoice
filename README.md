@@ -26,3 +26,8 @@ pip3 install requests
 - 보이스 다운로드를 원하는 학생의 이름을 영문으로 입력
   + 예시: Azusa
 - (학생이름) 폴더에서 .zip 파일 얻기
+
+- - -
+
+### 보이스 출처
+__https://bluearchive.wiki/wiki/Main_Page__
