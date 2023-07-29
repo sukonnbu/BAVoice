@@ -1,29 +1,39 @@
 import os
+import sys
 import requests
+import convert
+import makezip
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
 
 character = input("원하는 블루아카 캐릭터를 영문으로 입력하세요(예시: Azusa) : ")
 path = f"./{character}/"
-os.makedirs(path)
 
 res = requests.get(f'https://bluearchive.wiki/wiki/{character}/audio')
 soup = BeautifulSoup(res.content, 'html.parser')
 
 audio_list = soup.findAll('audio')
 
+if not audio_list:
+    print("잘못된 학생 이름입니다. 다시 입력하세요.")
+    sys.exit()
+
+if not os.path.isdir(path):
+    os.makedirs(path)
 
 for audio in audio_list:
     source = audio.find('source')
     title = audio['data-mwtitle']
     src = "https:" + source['src']
-    #print(title, src)
-    urlretrieve(src, path + title)
+    print(src, "다운로드중...")
+    try:
+        urlretrieve(src, path + title)
+    except Exception as e:
+        print(src, "다운로드 실패...\n오류메세지: ", e)
+        continue
+    print(src, "다운로드 성공")
 
+print("오디오 다운로드 완료\n보이스 개수 : ", len(audio_list))
 
-src_list = os.listdir(path)
-print(src_list)
-os.makedirs(path + "converted/")
-
-for audio in src_list:
-    os.system(f"ffmpeg.exe -i ./{path}/{audio} ./{path}/converted/{audio[:-4]}.wav")
+convert.convert_to_wav(path)
+makezip.make_zip(path)
