@@ -4,6 +4,7 @@ RVC 학습을 위한 블루아카이브 학생 오디오 다운로더
 ## 1. Python3
 ## 2. BeautifulSoup4
 ## 3. Requests
+## 4. ffmpeg
 - - -
 # 설치 방법
 ## 1. <>Code => **Download zip** 으로 코드 다운로드 후 압축 풀기
