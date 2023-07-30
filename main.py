@@ -15,7 +15,7 @@ soup = BeautifulSoup(res.content, 'html.parser')
 audio_list = soup.findAll('audio')
 
 if not audio_list:
-    print("잘못된 학생 이름입니다. 다시 입력하세요.")
+    print("잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
     sys.exit()
 
 if not os.path.isdir(path):
