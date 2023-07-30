@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
 
 character = input("원하는 블루아카 캐릭터를 영문으로 입력하세요(예시: Azusa) : ")
-path = f"./{character}/"
 
 res = requests.get(f'https://bluearchive.wiki/wiki/{character}/audio')
 soup = BeautifulSoup(res.content, 'html.parser')
@@ -17,6 +16,9 @@ audio_list = soup.findAll('audio')
 if not audio_list:
     print("잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
     sys.exit()
+
+character = character.replace(" ", "")
+path = f"./{character}/"
 
 if not os.path.isdir(path):
     os.makedirs(path)
