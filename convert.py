@@ -12,6 +12,6 @@ def convert_to_wav(path):
 
 if __name__ == "__main__":
     character = input("원하는 블루아카 캐릭터를 영문으로 입력하세요(예시: Azusa) : ")
-    path = f"./{character}/"
+    path = f"./{character.replace(' ', '_')}/"
 
     convert_to_wav(path)

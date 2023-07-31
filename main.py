@@ -17,7 +17,7 @@ if not audio_list:
     print("잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
     sys.exit()
 
-character = character.replace(" ", "")
+character = character.replace(" ", "_")
 path = f"./{character}/"
 
 if not os.path.isdir(path):
