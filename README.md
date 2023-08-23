@@ -34,9 +34,10 @@ pip3 install requests
 - *BAaudio.py* 실행
 - {학생이름} 폴더에서 .zip 파일 얻기
 
-
-
+  
+### 학생 이름 찾기
 - liststds.py 실행 (또는 "학생 명부.txt") 으로 학생들의 영문 이름 목록 보기
+- - -
 - - -
 
 ### 보이스 출처
