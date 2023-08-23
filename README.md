@@ -10,7 +10,7 @@
 - - -
 ## 설치 방법
 ### 1. <>Code => **Download zip** 으로 코드 다운로드 후 압축 풀기
-### 2. Python 다운로드 [Python](https://www.python.org/ftp/python/3.11.4/python-3.11.4-amd64.exe)
+### 2. Python 다운로드 [Python](https://www.python.org/ftp/python/)
 ### 3. BeautifulSoup4, Requests 설치
 Win + R 키, "cmd" 입력
 
