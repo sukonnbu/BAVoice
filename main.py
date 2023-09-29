@@ -4,8 +4,10 @@ import convert
 import makezip
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
+from tkinter import messagebox as msg_box
 
-def crawlVoices(character: str) :
+
+def crawl_voices(character: str):
     res = requests.get(f'https://bluearchive.wiki/wiki/{character}/audio')
     soup = BeautifulSoup(res.content, 'html.parser')
     path = ''
@@ -34,8 +36,7 @@ def crawlVoices(character: str) :
                     continue
             print(src, "다운로드 성공")
     else:
-        print("잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
-
+        msg_box.showerror("오류", "잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
 
     print("오디오 다운로드 완료\n보이스 개수 : ", len(audio_list))
 
@@ -45,4 +46,4 @@ def crawlVoices(character: str) :
 
 if __name__ == "__main__":
     character = input("원하는 블루아카 캐릭터를 영문으로 입력하세요(예시: Azusa) : ")
-    crawlVoices(character)
+    crawl_voices(character)

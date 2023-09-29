@@ -1,36 +1,39 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox as msgBox
+from tkinter import messagebox as msg_box
 import main
 
-def getText():
+
+def get_text():
     text = selectText.get("1.0", END).strip()
 
-    stdList = []
+    std_list = []
     while True:
-        linespaceIndex = int(text.find("\n"))
+        linespace_index = int(text.find("\n"))
 
-        if linespaceIndex != -1:
-            stdList.append(text[0:linespaceIndex].strip())
-            text = text[linespaceIndex + 1:]
+        if linespace_index != -1:
+            std_list.append(text[0:linespace_index].strip())
+            text = text[linespace_index + 1:]
         else:
-            stdList.append(text.strip())
+            std_list.append(text.strip())
             break
 
-    print(stdList)
-    return stdList
+    print(std_list)
+    return std_list
+
 
 def download_voices():
-    stdList = getText()
-    stdNumber = len(stdList)
+    std_list = get_text()
+    std_num = len(std_list)
 
-    for i in range(0, stdNumber):
-        main.crawlVoices(stdList[i])
-        setPrgBar(round((100 / stdNumber) * (i+1), 1))
+    for i in range(0, std_num):
+        main.crawlVoices(std_list[i])
+        set_prg_bar(round((100 / std_num) * (i+1), 1))
 
-    msgBox.showinfo("알림", "다운로드 완료")
+    msg_box.showinfo("알림", "다운로드 완료")
 
-def setPrgBar(value):
+
+def set_prg_bar(value):
     p_var.set(value)
     lab_text.set(f"{value} %")
 
