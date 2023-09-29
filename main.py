@@ -5,10 +5,11 @@ import makezip
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
 
-def crawlVoices(character: str) :
+
+def crawlVoices(character: str):
     res = requests.get(f'https://bluearchive.wiki/wiki/{character}/audio')
     soup = BeautifulSoup(res.content, 'html.parser')
-    path = ''
+    path: str = ''
 
     audio_list = soup.findAll('audio')
 
@@ -35,7 +36,6 @@ def crawlVoices(character: str) :
             print(src, "다운로드 성공")
     else:
         print("잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
-
 
     print("오디오 다운로드 완료\n보이스 개수 : ", len(audio_list))
 
