@@ -48,7 +48,7 @@ window.rowconfigure(0, weight=1)
 
 
 lab = Label(mainframe, text="Student List to Download")
-lab.grid(column=2, row=1, sticky=(W))
+lab.grid(column=2, row=1)
 selectText = Text(mainframe)
 selectText.grid(column=2, row=2)
 getButton = Button(mainframe, text="DOWNLOAD", command=download_voices)
