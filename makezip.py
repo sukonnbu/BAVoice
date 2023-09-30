@@ -1,5 +1,7 @@
 import os
 import zipfile
+
+
 def make_zip(path, exp_type: str):
     if os.path.isdir(path):
         zip_file = zipfile.ZipFile(path + f"/{path[2:-1]}.zip", "w")
@@ -7,7 +9,7 @@ def make_zip(path, exp_type: str):
         for file in os.listdir(path):
             try:
                 if file.endswith(exp_type):
-                    zip_file.write(os.path.join(path, file), compress_type = zipfile.ZIP_DEFLATED)
+                    zip_file.write(os.path.join(path, file), compress_type=zipfile.ZIP_DEFLATED)
                     print(file + " 파일 추가")
 
                     os.remove(os.path.join(path, file))
@@ -18,6 +20,7 @@ def make_zip(path, exp_type: str):
         zip_file.close()
 
         print("ZIP 파일 생성 완료")
+
 
 if __name__ == "__main__":
     character = input("원하는 블루아카 캐릭터를 영문으로 입력하세요(예시: Azusa) : ")
