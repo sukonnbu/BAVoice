@@ -1,12 +1,12 @@
 import os
 import zipfile
-def make_zip(path):
+def make_zip(path, exp_type: str):
     if os.path.isdir(path):
         zip_file = zipfile.ZipFile(path + f"/{path[2:-1]}.zip", "w")
 
         for file in os.listdir(path):
             try:
-                if file.endswith(".wav"):
+                if file.endswith(exp_type):
                     zip_file.write(os.path.join(path, file), compress_type = zipfile.ZIP_DEFLATED)
                     print(file + " 파일 추가")
 
@@ -23,4 +23,4 @@ if __name__ == "__main__":
     character = input("원하는 블루아카 캐릭터를 영문으로 입력하세요(예시: Azusa) : ")
     path = f"./{character.replace(' ', '_')}/"
 
-    make_zip(path)
+    make_zip(path, ".wav")

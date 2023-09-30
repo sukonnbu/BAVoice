@@ -7,7 +7,7 @@ from urllib.request import urlretrieve
 from tkinter import messagebox as msg_box
 
 
-def crawl_voices(character: str):
+def crawl_voices(character: str, exp_type: str, is_zip: int):
     res = requests.get(f'https://bluearchive.wiki/wiki/{character}/audio')
     soup = BeautifulSoup(res.content, 'html.parser')
     path = ''
@@ -40,8 +40,8 @@ def crawl_voices(character: str):
 
     print("오디오 다운로드 완료\n보이스 개수 : ", len(audio_list))
 
-    convert.convert_to_wav(path)
-    makezip.make_zip(path)
+    convert.convert_to(path, exp_type)
+    if is_zip == 1: makezip.make_zip(path, exp_type)
 
 
 if __name__ == "__main__":
