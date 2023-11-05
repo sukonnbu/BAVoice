@@ -40,8 +40,9 @@ def set_prg_bar(value):
 
     main_prg_bar.update()
 
+
 window = Tk()
-window.title("BAaudio GUI")
+window.title("BAVoice GUI")
 window.resizable(False, False)
 
 mainframe = ttk.Frame(window, padding="3 3 12 12")
@@ -50,7 +51,7 @@ window.columnconfigure(0, weight=1)
 window.rowconfigure(0, weight=1)
 
 
-title_lab = Label(mainframe, text="Student List to Download")
+title_lab = Label(mainframe, text="Student List to Download", font="arial")
 title_lab.grid(column=2, row=1)
 select_text = Text(mainframe)
 select_text.grid(column=2, row=2)
@@ -76,8 +77,8 @@ prg_lab = Label(mainframe, textvariable=prg_text)
 prg_lab.grid(column=2, row=6)
 
 main_p_var = DoubleVar()
-main_prg_bar = ttk.Progressbar(mainframe, maximum=100, length=150, variable=main_p_var)
-main_prg_bar.grid(column=2, row=7)
+main_prg_bar = ttk.Progressbar(mainframe, maximum=100, length=500, variable=main_p_var)
+main_prg_bar.grid(column=2, row=7, columnspan=3)
 
 for child in mainframe.winfo_children():
     child.grid_configure(padx=5, pady=5)
