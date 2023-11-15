@@ -1,13 +1,12 @@
 import os
-import tkinter as tk
-
 import requests
 import convert
 import makezip
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
-from tkinter import messagebox as msg_box
+import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox as msg_box
 
 
 class Character:
@@ -30,7 +29,7 @@ class Character:
             if not os.path.isdir(path):
                 os.makedirs(path)
 
-            for i in range(0,len(audio_list)):
+            for i in range(0, len(audio_list)):
 
                 source = audio_list[i].find('source')
                 title = audio_list[i]['data-mwtitle']

@@ -1,7 +1,7 @@
+import main
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox as msg_box
-import main
 
 
 def get_text():
