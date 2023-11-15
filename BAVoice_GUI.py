@@ -1,12 +1,10 @@
-import os
-
 import main
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox as msg_box
 
 
-def get_text():
+def get_text(window: Tk, log_text: Text):
     text = select_text.get("1.0", END).strip()
 
     std_list = []
@@ -20,20 +18,24 @@ def get_text():
             std_list.append(text.strip())
             break
 
-    print(std_list)
+    log_text.insert(1.0, str(std_list) + "\n")
+    window.update()
+
     return std_list
 
 
-def download_voices(sub_p_var, sub_prg_bar, log_text):
+def download_voices(window, sub_p_var, sub_prg_bar, log_text):
     set_prg_bar(0)
-    std_list = get_text()
+    std_list = get_text(window, log_text)
     std_num = len(std_list)
 
     for i in range(0, std_num):
         std = main.Character(std_list[i], exp_combobox.get(), zip_var.get())
-        std.crawl_voices(sub_prg_bar, sub_p_var, log_text)
+        std.crawl_voices(window, sub_p_var, sub_prg_bar, log_text)
         set_prg_bar(round((100 / std_num) * (i+1), 1))
 
+    log_text.insert(1.0, f"다운로드 완료!\n")
+    window.update()
     msg_box.showinfo("알림", "다운로드 완료")
 
 
@@ -71,10 +73,12 @@ zip_chkbox = Checkbutton(mainframe, text=".zip 파일로 압축하기", variable
 zip_chkbox.select()
 zip_chkbox.grid(column=2, row=4, sticky=E)
 
-get_button = Button(mainframe, text="DOWNLOAD", command=lambda: download_voices(sub_p_var, sub_prg_bar, log_text))
+get_button = Button(
+    mainframe, text="DOWNLOAD", command=lambda: download_voices(window, sub_p_var, sub_prg_bar, log_text)
+)
 get_button.grid(column=2, row=5)
 
-log_text = Text(mainframe, state="disabled")
+log_text = Text(mainframe, width=65, height=10)
 log_text.grid(column=2, row=6)
 
 prg_text = StringVar()

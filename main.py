@@ -15,7 +15,7 @@ class Character:
         self.exp_type = exp_type
         self.is_zip = is_zip
 
-    def crawl_voices(self, sub_prg_bar: ttk.Progressbar, sub_p_var: tk.DoubleVar, log_text: tk.Text):
+    def crawl_voices(self, window: tk.Tk, sub_p_var: tk.DoubleVar, sub_prg_bar: ttk.Progressbar, log_text: tk.Text):
         res = requests.get(f'https://bluearchive.wiki/wiki/{self.name}/audio')
         soup = BeautifulSoup(res.content, 'html.parser')
         path = ''
@@ -34,25 +34,29 @@ class Character:
                 source = audio_list[i].find('source')
                 title = audio_list[i]['data-mwtitle']
                 src = "https:" + source['src']
-                log_text.insert(tk.END, src + " 다운로드 중...")
-                print(src, "다운로드 중")
+                log_text.insert(1.0, f"{src}\n다운로드 중...\n")
+                window.update()
 
                 if not os.path.isfile(path + title):
                     try:
                         urlretrieve(src, path + title)
-                        log_text.insert(tk.END, src + " 다운로드 성공")
-                        print(src, "다운로드 성공")
+                        log_text.insert(1.0, f"다운로드 성공!\n")
                     except Exception as e:
-                        log_text.insert(tk.END, src + " 다운로드 실패...\n오류메세지: " + e)
+                        log_text.insert(1.0, f"다운로드 실패...\n오류메시지: {e}\n")
+                else:
+                    log_text.insert(1.0, f"다운로드 성공!\n")
+                window.update()
 
                 sub_p_var.set(i/len(audio_list) * 100)
+                sub_prg_bar.update()
 
         else:
             msg_box.showerror("오류", "잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
 
-        log_text.insert(tk.END, "오디오 다운로드 완료\n보이스 개수 :" + str(len(audio_list)))
+        log_text.insert(1.0, f"오디오 다운로드 완료\n보이스 개수: {len(audio_list)}\n")
+        window.update()
 
-        convert.convert_to(path, self.exp_type)
+        convert.convert_to(path, window, sub_p_var, sub_prg_bar, log_text, self.exp_type)
 
         if self.is_zip == 1:
-            makezip.make_zip(path, self.exp_type)
+            makezip.make_zip(path, window, sub_p_var, sub_prg_bar, log_text, self.exp_type)
