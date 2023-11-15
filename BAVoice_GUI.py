@@ -17,7 +17,6 @@ def get_text(window: Tk, log_text: Text):
         else:
             std_list.append(text.strip())
             break
-
     log_text.insert(1.0, str(std_list) + "\n")
     window.update()
 

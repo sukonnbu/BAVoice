@@ -20,7 +20,6 @@ def make_zip(path, window: tk.Tk, log_text: tk.Text, exp_type: str):
             except Exception as e:
                 log_text.insert(1.0, f".zip 생성 중 오류 발생...\n오류메시지: {e}\n")
             window.update()
-
         zip_file.close()
 
         log_text.insert(1.0, f".zip 파일 생성 완료!\n")
