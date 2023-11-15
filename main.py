@@ -7,6 +7,7 @@ from urllib.request import urlretrieve
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as msg_box
+from tkinter.scrolledtext import ScrolledText
 
 
 class Character:
@@ -15,7 +16,9 @@ class Character:
         self.exp_type = exp_type
         self.is_zip = is_zip
 
-    def crawl_voices(self, window: tk.Tk, sub_p_var: tk.DoubleVar, sub_prg_bar: ttk.Progressbar, log_text: tk.Text):
+    def crawl_voices(
+            self, window: tk.Tk, sub_p_var: tk.DoubleVar, sub_prg_bar: ttk.Progressbar, log_text: ScrolledText
+    ):
         res = requests.get(f'https://bluearchive.wiki/wiki/{self.name}/audio')
         soup = BeautifulSoup(res.content, 'html.parser')
         path = ''
@@ -34,17 +37,26 @@ class Character:
                 source = audio_list[i].find('source')
                 title = audio_list[i]['data-mwtitle']
                 src = "https:" + source['src']
+
+                log_text['state'] = "normal"
                 log_text.insert(1.0, f"{src}\n다운로드 중...\n")
+                log_text['state'] = "disabled"
                 window.update()
 
                 if not os.path.isfile(path + title):
                     try:
                         urlretrieve(src, path + title)
+                        log_text['state'] = "normal"
                         log_text.insert(1.0, f"다운로드 성공!\n")
+                        log_text['state'] = "disabled"
                     except Exception as e:
+                        log_text['state'] = "normal"
                         log_text.insert(1.0, f"다운로드 실패...\n오류메시지: {e}\n")
+                        log_text['state'] = "disabled"
                 else:
+                    log_text['state'] = "normal"
                     log_text.insert(1.0, f"다운로드 성공!\n")
+                    log_text['state'] = "disabled"
                 window.update()
 
                 sub_p_var.set(i/len(audio_list) * 100)
@@ -53,7 +65,9 @@ class Character:
         else:
             msg_box.showerror("오류", "잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
 
+        log_text['state'] = "normal"
         log_text.insert(1.0, f"오디오 다운로드 완료\n보이스 개수: {len(audio_list)}\n")
+        log_text['state'] = "disabled"
         window.update()
 
         convert.convert_to(path, window, sub_p_var, sub_prg_bar, log_text, self.exp_type)
