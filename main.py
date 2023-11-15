@@ -59,4 +59,4 @@ class Character:
         convert.convert_to(path, window, sub_p_var, sub_prg_bar, log_text, self.exp_type)
 
         if self.is_zip == 1:
-            makezip.make_zip(path, window, sub_p_var, sub_prg_bar, log_text, self.exp_type)
+            makezip.make_zip(path, window, log_text, self.exp_type)
