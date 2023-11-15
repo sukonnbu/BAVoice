@@ -1,5 +1,6 @@
 # RVC 학습을 위한 블루아카이브 학생 오디오 다운로더
-- _**made by.**_ 2023 경희고등학교 2기 전공심화탐구
+- _**made for.**_ 2023 경희고등학교 2기 전공심화탐구
+- _**made for.**_ 2023 경희고등학교 학술제
 
 - - -
 ## dependencies
@@ -25,14 +26,13 @@ pip3 install requests
 입력 후 실행
 - - -
 ## 실행
-- *download_list.txt* 에 원하는 학생들의 이름을 영문으로 입력
+- *BAVoice_GUI.py* 실행 후 원하는 학생들의 이름을 영문으로 입력
 + 예시:
   ```
   Azusa
   Yuuka (Sportswear)
   ```
-- *BAaudio.py* 실행
-- {학생이름} 폴더에서 .zip 파일 얻기
+- {학생이름} 폴더에서 결과물 얻기
 
   
 ### 학생 이름 찾기
