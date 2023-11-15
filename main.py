@@ -15,7 +15,7 @@ class Character:
         self.exp_type = exp_type
         self.is_zip = is_zip
 
-    def crawl_voices(self, sub_prg_bar: ttk.Progressbar, sub_p_var: tk.DoubleVar):
+    def crawl_voices(self, sub_prg_bar: ttk.Progressbar, sub_p_var: tk.DoubleVar, log_text: tk.Text):
         res = requests.get(f'https://bluearchive.wiki/wiki/{self.name}/audio')
         soup = BeautifulSoup(res.content, 'html.parser')
         path = ''
@@ -34,22 +34,23 @@ class Character:
                 source = audio_list[i].find('source')
                 title = audio_list[i]['data-mwtitle']
                 src = "https:" + source['src']
-                print(src, "다운로드중...")
+                log_text.insert(tk.END, src + " 다운로드 중...")
+                print(src, "다운로드 중")
 
                 if not os.path.isfile(path + title):
                     try:
                         urlretrieve(src, path + title)
+                        log_text.insert(tk.END, src + " 다운로드 성공")
                         print(src, "다운로드 성공")
                     except Exception as e:
-                        print(src, "다운로드 실패...\n오류메세지: ", e)
+                        log_text.insert(tk.END, src + " 다운로드 실패...\n오류메세지: " + e)
 
                 sub_p_var.set(i/len(audio_list) * 100)
-                sub_prg_bar.update()
 
         else:
             msg_box.showerror("오류", "잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
 
-        print("오디오 다운로드 완료\n보이스 개수 : ", len(audio_list))
+        log_text.insert(tk.END, "오디오 다운로드 완료\n보이스 개수 :" + str(len(audio_list)))
 
         convert.convert_to(path, self.exp_type)
 

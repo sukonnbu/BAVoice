@@ -20,10 +20,3 @@ def make_zip(path, exp_type: str):
         zip_file.close()
 
         print("ZIP 파일 생성 완료")
-
-
-if __name__ == "__main__":
-    character = input("원하는 블루아카 캐릭터를 영문으로 입력하세요(예시: Azusa) : ")
-    path = f"./{character.replace(' ', '_')}/"
-
-    make_zip(path, ".wav")
