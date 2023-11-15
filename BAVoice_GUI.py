@@ -23,12 +23,15 @@ def get_text():
 
 
 def download_voices():
+    global sub_prg_bar
+    global sub_p_var
     set_prg_bar(0)
     std_list = get_text()
     std_num = len(std_list)
 
     for i in range(0, std_num):
-        main.crawl_voices(std_list[i], exp_combobox.get(), zip_var.get())
+        std = main.Character(std_list[i], exp_combobox.get(), zip_var.get())
+        std.crawl_voices(sub_prg_bar, sub_p_var)
         set_prg_bar(round((100 / std_num) * (i+1), 1))
 
     msg_box.showinfo("알림", "다운로드 완료")
@@ -51,7 +54,7 @@ window.columnconfigure(0, weight=1)
 window.rowconfigure(0, weight=1)
 
 
-title_lab = Label(mainframe, text="Student List to Download", font="arial")
+title_lab = Label(mainframe, text="Student List to Download:", font="arial")
 title_lab.grid(column=2, row=1)
 select_text = Text(mainframe)
 select_text.grid(column=2, row=2)
@@ -79,6 +82,10 @@ prg_lab.grid(column=2, row=6)
 main_p_var = DoubleVar()
 main_prg_bar = ttk.Progressbar(mainframe, maximum=100, length=500, variable=main_p_var)
 main_prg_bar.grid(column=2, row=7, columnspan=3)
+
+sub_p_var = DoubleVar()
+sub_prg_bar = ttk.Progressbar(mainframe, maximum=100, length=500, variable=sub_p_var)
+sub_prg_bar.grid(column=2, row=8, columnspan=3)
 
 for child in mainframe.winfo_children():
     child.grid_configure(padx=5, pady=5)

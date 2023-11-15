@@ -1,52 +1,58 @@
 import os
+import tkinter as tk
+
 import requests
 import convert
 import makezip
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
 from tkinter import messagebox as msg_box
+from tkinter import ttk
 
 
-def crawl_voices(character: str, exp_type: str, is_zip: int):
-    res = requests.get(f'https://bluearchive.wiki/wiki/{character}/audio')
-    soup = BeautifulSoup(res.content, 'html.parser')
-    path = ''
+class Character:
+    def __init__(self, name: str, exp_type: str, is_zip: int):
+        self.name = name
+        self.exp_type = exp_type
+        self.is_zip = is_zip
 
-    audio_list = soup.findAll('audio')
+    def crawl_voices(self, sub_prg_bar: ttk.Progressbar, sub_p_var: tk.DoubleVar):
+        res = requests.get(f'https://bluearchive.wiki/wiki/{self.name}/audio')
+        soup = BeautifulSoup(res.content, 'html.parser')
+        path = ''
 
-    if audio_list:
+        audio_list = soup.findAll('audio')
 
-        character = character.replace(" ", "_")
-        path = f"./{character}/"
+        if audio_list:
+            name = self.name.replace(" ", "_")
+            path = f"./{name}/"
 
-        if not os.path.isdir(path):
-            os.makedirs(path)
+            if not os.path.isdir(path):
+                os.makedirs(path)
 
-        for audio in audio_list:
+            for i in range(0,len(audio_list)):
 
-            source = audio.find('source')
-            title = audio['data-mwtitle']
-            src = "https:" + source['src']
-            print(src, "다운로드중...")
+                source = audio_list[i].find('source')
+                title = audio_list[i]['data-mwtitle']
+                src = "https:" + source['src']
+                print(src, "다운로드중...")
 
-            if not os.path.isfile(path + title):
-                try:
-                    urlretrieve(src, path + title)
-                    print(src, "다운로드 성공")
-                except Exception as e:
-                    print(src, "다운로드 실패...\n오류메세지: ", e)
+                if not os.path.isfile(path + title):
+                    try:
+                        urlretrieve(src, path + title)
+                        print(src, "다운로드 성공")
+                    except Exception as e:
+                        print(src, "다운로드 실패...\n오류메세지: ", e)
 
-    else:
-        msg_box.showerror("오류", "잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
+                sub_p_var.set(i/len(audio_list) * 100)
+                sub_prg_bar.update()
 
-    print("오디오 다운로드 완료\n보이스 개수 : ", len(audio_list))
+        else:
+            msg_box.showerror("오류", "잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
 
-    convert.convert_to(path, exp_type)
+        print("오디오 다운로드 완료\n보이스 개수 : ", len(audio_list))
 
-    if is_zip == 1:
-        makezip.make_zip(path, exp_type)
+        convert.convert_to(path, self.exp_type)
 
-
-if __name__ == "__main__":
-    character = input("원하는 블루아카 캐릭터를 영문으로 입력하세요(예시: Azusa) : ")
-    crawl_voices(character, ".wav", 1)
+        if self.is_zip == 1:
+            makezip.make_zip(path, self.exp_type)
