@@ -1,7 +1,6 @@
 import os
 import zipfile
 import tkinter as tk
-from tkinter import ttk
 
 
 def make_zip(path, window: tk.Tk, log_text: tk.Text, exp_type: str):
