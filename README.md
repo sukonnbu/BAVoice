@@ -3,40 +3,28 @@
 - _**made for.**_ 2023 경희고등학교 학술제
 
 - - -
-## dependencies
+## Using
 ### 1. Python3
 ### 2. BeautifulSoup4
 ### 3. Requests
 ### 4. ffmpeg
+### 5. PIL
 - - -
 ## 설치 방법
-### 1. <>Code => **Download zip** 으로 코드 다운로드 후 압축 풀기
-### 2. Python 다운로드 [Python](https://www.python.org/)
-### 3. BeautifulSoup4, Requests 설치
-Win + R 키, "cmd" 입력
-
-
-dos 창에서
-```
-pip3 install beautifulsoup4
-```
-```
-pip3 install requests
-```
-입력 후 실행
+- _<>Code_ -> _Download ZIP_ 클릭 후 압축 풀기
 - - -
 ## 실행
-- *BAVoice_GUI.py* 실행 후 원하는 학생들의 이름을 영문으로 입력
+- __*BAVoice_GUI.exe*__ 실행 후 원하는 학생들의 이름을 영문으로 입력
 + 예시:
   ```
   Azusa
   Yuuka (Sportswear)
   ```
-- {학생이름} 폴더에서 결과물 얻기
+- _{학생이름} 폴더_ 에서 결과물 얻기
 
   
 ### 학생 이름 찾기
-- liststds.py 실행 (또는 "학생 명부.txt") 으로 학생들의 영문 이름 목록 보기
+- __*liststds.exe*__ 실행 후 _학생 명부.txt_ 에서 학생들의 영문 이름 목록 보기
 - - -
 - - -
 
