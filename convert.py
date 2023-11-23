@@ -12,7 +12,7 @@ def convert_to(
 
         for i in range(0, len(src_list)):
             try:
-                os.system(f"ffmpeg.exe -i ./{path}/{src_list[i]} ./{path}/{src_list[i][:-4]}{exp_type}")
+                os.system(f"ffmpeg.exe -i ./{path}/{src_list[i]} ./{path}/{src_list[i][:-4]}{exp_type} -loglevel quiet")
                 os.remove(f"./{path}/{src_list[i]}")
 
                 log_text['state'] = "normal"
