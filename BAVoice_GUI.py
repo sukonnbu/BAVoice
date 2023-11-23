@@ -91,7 +91,6 @@ get_button = tk.Button(
 get_button.grid(column=2, row=7)
 
 
-
 prg_text = tk.StringVar()
 prg_text.set("0 %")
 prg_lab = tk.Label(mainframe, textvariable=prg_text)
