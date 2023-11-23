@@ -14,6 +14,6 @@ executables = [
 
 setup(name='BAVoice_GUI',
       version = '1.0',
-      description = "Download Blue Archive Students' Voices",
+      description = "Download Blue Archive Students' Voices for RVC",
       options = {'build_exe': build_options},
       executables = executables)
