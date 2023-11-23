@@ -19,20 +19,21 @@
 - - -
 ## 실행
 - __*BAVoice_GUI.exe*__ 또는 __*BAVoice_GUI.py*__ 실행
-<br>
-<img src="메인 화면.png" height=300></img>
+<br> <img src="메인 화면.png" height=300></img>
 - 학생 이름을 정해진 형식의 영문으로 입력
+
 + 예시:
   ```
   Azusa
   Yuuka (Sportswear)
   ```
+
 - _{학생이름} 폴더_ 에서 결과물 얻기
 
   
 ### 학생 이름 찾기
 - __*liststds.exe*__ 또는 __*liststds.py*__ 실행 후 _학생 명부.txt_ 에서 학생들의 영문 이름 목록 보기
-<img src="학생 명부.png" height=300></img>
+<br> <img src="학생 명부.png" height=300></img>
 - - -
 
 [경희고등학교]: https://kyungheeboy.hs.kr
