@@ -8,7 +8,7 @@ import sys
 base = 'Win32GUI' if sys.platform=='win32' else None
 
 executables = [
-    Executable('BAVoice_GUI.py', base=base),
+    Executable('BAVoice_GUI.py', base=base, icon="icon.ico"),
     Executable('liststds.py')
 ]
 
