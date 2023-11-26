@@ -1,9 +1,19 @@
 import main
+import liststds
 from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as msg_box
 from tkinter.scrolledtext import ScrolledText
+import webbrowser
+
+
+def callback(url: str):
+    webbrowser.open_new(url)
+
+
+def open_std_list():
+    liststds.make_std_list()
 
 
 def get_text(window: tk.Tk, log_text: ScrolledText):
@@ -61,6 +71,17 @@ mainframe.grid(column=0, row=0)
 window.columnconfigure(0, weight=1)
 window.rowconfigure(0, weight=1)
 
+menubar = tk.Menu(window)
+window.config(menu=menubar)
+file_menu = tk.Menu(menubar, tearoff=0)
+file_menu.add_command(label="Check STD's Name", command=open_std_list)
+file_menu.add_command(label="RVC",
+                      command=lambda: callback("https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI")
+                      )
+file_menu.add_separator()
+file_menu.add_command(label="Exit", command=window.quit)
+menubar.add_cascade(label="File", menu=file_menu)
+
 logo_img = Image.open("Logo.png")
 logo_img = logo_img.resize((500, 110))
 img = ImageTk.PhotoImage(logo_img)
@@ -72,6 +93,9 @@ title_lab = tk.Label(mainframe, text="Student List to Download:", font="arial")
 title_lab.grid(column=2, row=2)
 select_text = ScrolledText(mainframe, width=65, height=10)
 select_text.grid(column=2, row=3)
+
+log_text = ScrolledText(mainframe, width=65, height=15, state="disabled")
+log_text.grid(column=2, row=4)
 
 conv_lab = tk.Label(mainframe, text="Convert to: ")
 conv_lab.grid(column=2, row=5)
@@ -104,8 +128,6 @@ sub_p_var = tk.DoubleVar()
 sub_prg_bar = ttk.Progressbar(mainframe, maximum=100, length=400, variable=sub_p_var)
 sub_prg_bar.grid(column=2, row=10, columnspan=3)
 
-log_text = ScrolledText(mainframe, width=65, height=15, state="disabled")
-log_text.grid(column=2, row=4)
 
 for child in mainframe.winfo_children():
     child.grid_configure(padx=5, pady=5)

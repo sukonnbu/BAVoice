@@ -14,6 +14,7 @@ Ayane
 Ayane (Swimsuit)
 Azusa
 Azusa (Swimsuit)
+
 Cherino
 Cherino (Hot Spring)
 Chihiro
@@ -21,10 +22,13 @@ Chinatsu
 Chinatsu (Hot Spring)
 Chise
 Chise (Swimsuit)
+
 Eimi
+
 Fubuki
 Fuuka
 Fuuka (New Year)
+
 Hanae
 Hanae (Christmas)
 Hanako
@@ -50,6 +54,7 @@ Hinata (Swimsuit)
 Hiyori
 Hoshino
 Hoshino (Swimsuit)
+
 Ichika
 Iori
 Iori (Swimsuit)
@@ -58,9 +63,11 @@ Izumi
 Izumi (Swimsuit)
 Izuna
 Izuna (Swimsuit)
+
 Junko
 Junko (New Year)
 Juri
+
 Kaede
 Kaho
 Kanna
@@ -79,6 +86,7 @@ Kotama
 Kotori
 Kotori (Cheerleader)
 Koyuki
+
 Maki
 Mari
 Mari (Sportswear)
@@ -106,6 +114,7 @@ Momiji
 Momoi
 Mutsuki
 Mutsuki (New Year)
+
 Nagisa
 Natsu
 Neru
@@ -115,10 +124,13 @@ Nodoka
 Nodoka (Hot Spring)
 Nonomi
 Nonomi (Swimsuit)
+
 Pina
+
 Reisa
 Renge
 Rumi
+
 Saki
 Saki (Swimsuit)
 Sakurako
@@ -144,6 +156,7 @@ Shun
 Shun (Kid)
 Sumire
 Suzumi
+
 Toki
 Toki (Bunny Girl)
 Tomoe
@@ -151,12 +164,15 @@ Tsubaki
 Tsukuyo
 Tsurugi
 Tsurugi (Swimsuit)
+
 Ui
 Ui (Swimsuit)
 Utaha
 Utaha (Cheerleader)
+
 Wakamo
 Wakamo (Swimsuit)
+
 Yoshimi
 Yukari
 Yuuka
