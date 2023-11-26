@@ -10,6 +10,7 @@ from tkinter import messagebox as msg_box
 from tkinter.scrolledtext import ScrolledText
 
 
+# 생성자에 ( 캐릭터 이름 / 확장자 / 압축 여부 ) 전달
 class Character:
     def __init__(self, name: str, exp_type: str, is_zip: int):
         self.name = name
@@ -19,10 +20,12 @@ class Character:
     def crawl_voices(
             self, window: tk.Tk, sub_p_var: tk.DoubleVar, sub_prg_bar: ttk.Progressbar, log_text: ScrolledText
     ):
+        # 음성이 저장된 페이지에 접근
         res = requests.get(f'https://bluearchive.wiki/wiki/{self.name}/audio')
         soup = BeautifulSoup(res.content, 'html.parser')
         path = ''
 
+        # 음성 요소들만 뽑아냄
         audio_list = soup.findAll('audio')
 
         if audio_list:
@@ -33,7 +36,7 @@ class Character:
                 os.makedirs(path)
 
             for i in range(0, len(audio_list)):
-
+                # 관련 정보 추출
                 source = audio_list[i].find('source')
                 title = audio_list[i]['data-mwtitle']
                 src = "https:" + source['src']
@@ -43,20 +46,24 @@ class Character:
                 log_text['state'] = "disabled"
                 window.update()
 
+                # 다운로드
                 if not os.path.isfile(path + title):
                     try:
                         urlretrieve(src, path + title)
                         log_text['state'] = "normal"
                         log_text.insert(1.0, f"다운로드 성공!\n")
                         log_text['state'] = "disabled"
+
                     except Exception as e:
                         log_text['state'] = "normal"
                         log_text.insert(1.0, f"다운로드 실패...\n오류메시지: {e}\n")
                         log_text['state'] = "disabled"
+
                 else:
                     log_text['state'] = "normal"
                     log_text.insert(1.0, f"다운로드 성공!\n")
                     log_text['state'] = "disabled"
+
                 window.update()
 
                 sub_p_var.set(i/len(audio_list) * 100)
@@ -70,7 +77,9 @@ class Character:
         log_text['state'] = "disabled"
         window.update()
 
+        # 지정된 확장자로 변환
         convert.convert_to(path, window, sub_p_var, sub_prg_bar, log_text, self.exp_type)
 
+        # 파일 압축
         if self.is_zip == 1:
             makezip.make_zip(path, window, log_text, self.exp_type)
