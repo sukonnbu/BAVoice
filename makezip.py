@@ -3,7 +3,7 @@ import zipfile
 
 
 # 파일 압축
-def make_zip(path, set_log, exp_type: str):
+def make_zip(path: str, set_log, exp_type: str):
     # 압축파일 생성
     zip_file = zipfile.ZipFile(path + f"/{path[2:-1]}.zip", "w")
 

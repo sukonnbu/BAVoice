@@ -15,7 +15,7 @@ executables = [
 ]
 
 setup(name='BAVoice_GUI',
-      version='1.1',
+      version='1.2',
       description="Blue Archive Voice Downloader GUI",
       options={'build_exe': build_options},
       executables=executables)

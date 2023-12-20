@@ -9,37 +9,47 @@ import webbrowser
 import threading
 
 
+# 음성 다운로드 시작
 def start_download():
     download_thread = threading.Thread(target=download_voices)
+    download_thread.daemon = True
     download_thread.start()
 
 
+# 학생 명부 열기
 def open_std_list():
     std_list_thread = threading.Thread(target=liststds.make_std_list)
+    std_list_thread.daemon = True
     std_list_thread.start()
 
 
 # 입력란의 텍스트를 읽어 줄별로 나눔
 def get_text():
     text = select_text.get("1.0", tk.END).strip()
-
     std_list = []
+    
     while True:
         next_linespace_index = int(text.find("\n"))
 
-        if next_linespace_index != -1:
-            std_list.append(text[0:next_linespace_index].strip())
-            text = text[next_linespace_index + 1:]
-        else:
+        if next_linespace_index == -1:
             std_list.append(text.strip())
             break
+        else:
+            std_list.append(text[0:next_linespace_index].strip())
+            text = text[next_linespace_index + 1:]
+
     set_log(str(std_list))
 
     return std_list
 
 
-# 음성 다운로드 시작
+# 음성 다운로드
 def download_voices():
+    select_text['state'] = "disabled"
+    zip_chkbox['state'] = "disabled"
+    exp_combobox['state'] = "disabled"
+    download_button['state'] = "disabled"
+
     set_prg_bar("main", 0)
     std_list = get_text()
     std_num = len(std_list)
@@ -52,6 +62,10 @@ def download_voices():
     set_log("다운로드 완료!")
 
     msg_box.showinfo("알림", "다운로드 완료")
+    select_text['state'] = "normal"
+    zip_chkbox['state'] = "normal"
+    exp_combobox['state'] = "normal"
+    download_button['state'] = "normal"
 
 
 # 프로그레스 바 설정
@@ -68,6 +82,7 @@ def set_prg_bar(type: str, value: float):
         sub_prg_bar.update()
 
 
+# 로그 메시지 출력
 def set_log(text: str):
     log_text['state'] = "normal"
     log_text.insert(1.0, text + "\n")
@@ -133,10 +148,10 @@ zip_chkbox.grid(column=2, row=6, sticky=tk.E)
 
 
 # 다운로드 버튼
-get_button = tk.Button(
+download_button = tk.Button(
     mainframe, text="DOWNLOAD", command=start_download
 )
-get_button.grid(column=2, row=7)
+download_button.grid(column=2, row=7)
 
 
 # 주 프로그레스 바

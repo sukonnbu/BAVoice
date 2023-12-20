@@ -1,4 +1,5 @@
 import os
+import tkinter.messagebox
 import requests
 import convert
 import makezip
@@ -27,7 +28,11 @@ class Character:
             name = self.name.replace(" ", "_")
             path = f"./{name}/"
 
-            if not os.path.isdir(path):
+            if os.path.isdir(path):
+                is_proceed = tkinter.messagebox.askokcancel("확인", f"{path} 폴더가 이미 존재합니다. 이대로 진행하시겠습니까?")
+                if not is_proceed:
+                    return
+            else:
                 os.makedirs(path)
 
             for i in range(0, len(audio_list)):

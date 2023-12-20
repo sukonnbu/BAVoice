@@ -1,7 +1,7 @@
 import os
 
 
-def convert_to(path, set_prg_bar, set_log, exp_type):
+def convert_to(path: str, set_prg_bar, set_log, exp_type: str):
     if exp_type != ".ogg":
         src_list = os.listdir(path)
 
