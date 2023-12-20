@@ -51,7 +51,6 @@ class Character:
                 else:
                     set_log("다운로드 성공!")
 
-
                 set_prg_bar("sub", i/len(audio_list) * 100)
 
         else:

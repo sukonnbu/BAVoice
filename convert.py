@@ -1,5 +1,6 @@
 import os
 
+
 def convert_to(path, set_prg_bar, set_log, exp_type):
     if exp_type != ".ogg":
         src_list = os.listdir(path)
@@ -14,7 +15,6 @@ def convert_to(path, set_prg_bar, set_log, exp_type):
                 set_log(f"{path}/{src_list[i]} 파일 삭제")
 
             except Exception as e:
-                set_log("파일 변환중 오류 발생...\n오류메시지: {e}")
-
+                set_log(f"파일 변환중 오류 발생...\n오류메시지: {e}")
 
             set_prg_bar("sub", i/len(src_list)*100)
