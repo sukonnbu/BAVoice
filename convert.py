@@ -1,12 +1,6 @@
 import os
-import tkinter as tk
-from tkinter import ttk
-from tkinter.scrolledtext import ScrolledText
 
-
-def convert_to(
-        path, window: tk.Tk, sub_p_var: tk.DoubleVar, sub_prg_bar: ttk.Progressbar, log_text: ScrolledText, exp_type
-):
+def convert_to(path, set_prg_bar, set_log, exp_type):
     if exp_type != ".ogg":
         src_list = os.listdir(path)
 
@@ -14,21 +8,13 @@ def convert_to(
             try:
                 # 파일 변환
                 os.system(f"ffmpeg.exe -i ./{path}/{src_list[i]} ./{path}/{src_list[i][:-4]}{exp_type} -loglevel quiet")
-                log_text['state'] = "normal"
-                log_text.insert(1.0, f"{path}/{src_list[i]} 파일 변환 성공\n")
-                log_text['state'] = "disabled"
+                set_log(f"{path}/{src_list[i]} 파일 변환 성공")
 
                 os.remove(f"./{path}/{src_list[i]}")
-                log_text['state'] = "normal"
-                log_text.insert(1.0, f"{path}/{src_list[i]} 파일 삭제\n")
-                log_text['state'] = "disabled"
+                set_log(f"{path}/{src_list[i]} 파일 삭제")
 
             except Exception as e:
-                log_text['state'] = "normal"
-                log_text.insert(1.0, f"파일 변환중 오류 발생...\n오류메시지: {e}\n")
-                log_text['state'] = "disabled"
+                set_log("파일 변환중 오류 발생...\n오류메시지: {e}")
 
-            window.update()
 
-            sub_p_var.set(i/len(src_list)*100)
-            sub_prg_bar.update()
+            set_prg_bar("sub", i/len(src_list)*100)

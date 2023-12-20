@@ -4,10 +4,7 @@ import convert
 import makezip
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
-import tkinter as tk
-from tkinter import ttk
 from tkinter import messagebox as msg_box
-from tkinter.scrolledtext import ScrolledText
 
 
 # 생성자에 ( 캐릭터 이름 / 확장자 / 압축 여부 ) 전달
@@ -17,9 +14,7 @@ class Character:
         self.exp_type = exp_type
         self.is_zip = is_zip
 
-    def crawl_voices(
-            self, window: tk.Tk, sub_p_var: tk.DoubleVar, sub_prg_bar: ttk.Progressbar, log_text: ScrolledText
-    ):
+    def crawl_voices(self, set_prg_bar, set_log):
         # 음성이 저장된 페이지에 접근
         res = requests.get(f'https://bluearchive.wiki/wiki/{self.name}/audio')
         soup = BeautifulSoup(res.content, 'html.parser')
@@ -41,45 +36,32 @@ class Character:
                 title = audio_list[i]['data-mwtitle']
                 src = "https:" + source['src']
 
-                log_text['state'] = "normal"
-                log_text.insert(1.0, f"{src}\n다운로드 중...\n")
-                log_text['state'] = "disabled"
-                window.update()
+                set_log(f"{src}\n다운로드 중...")
 
                 # 다운로드
                 if not os.path.isfile(path + title):
                     try:
                         urlretrieve(src, path + title)
-                        log_text['state'] = "normal"
-                        log_text.insert(1.0, f"다운로드 성공!\n")
-                        log_text['state'] = "disabled"
+
+                        set_log("다운로드 성공!")
 
                     except Exception as e:
-                        log_text['state'] = "normal"
-                        log_text.insert(1.0, f"다운로드 실패...\n오류메시지: {e}\n")
-                        log_text['state'] = "disabled"
+                        set_log(f"다운로드 실패...\n오류메시지: {e}")
 
                 else:
-                    log_text['state'] = "normal"
-                    log_text.insert(1.0, f"다운로드 성공!\n")
-                    log_text['state'] = "disabled"
+                    set_log("다운로드 성공!")
 
-                window.update()
 
-                sub_p_var.set(i/len(audio_list) * 100)
-                sub_prg_bar.update()
+                set_prg_bar("sub", i/len(audio_list) * 100)
 
         else:
             msg_box.showerror("오류", "잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
 
-        log_text['state'] = "normal"
-        log_text.insert(1.0, f"오디오 다운로드 완료\n보이스 개수: {len(audio_list)}\n")
-        log_text['state'] = "disabled"
-        window.update()
+        set_log(f"오디오 다운로드 완료\n보이스 개수: {len(audio_list)}")
 
         # 지정된 확장자로 변환
-        convert.convert_to(path, window, sub_p_var, sub_prg_bar, log_text, self.exp_type)
+        convert.convert_to(path, set_prg_bar, set_log, self.exp_type)
 
         # 파일 압축
         if self.is_zip == 1:
-            makezip.make_zip(path, window, log_text, self.exp_type)
+            makezip.make_zip(path, set_log, self.exp_type)

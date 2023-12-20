@@ -6,18 +6,21 @@ from tkinter import ttk
 from tkinter import messagebox as msg_box
 from tkinter.scrolledtext import ScrolledText
 import webbrowser
+import threading
 
 
-def callback(url: str):
-    webbrowser.open_new(url)
+def start_download():
+    download_thread = threading.Thread(target=download_voices)
+    download_thread.start()
 
 
 def open_std_list():
-    liststds.make_std_list()
+    std_list_thread = threading.Thread(target=liststds.make_std_list)
+    std_list_thread.start()
 
 
 # 입력란의 텍스트를 읽어 줄별로 나눔
-def get_text(window: tk.Tk, log_text: ScrolledText):
+def get_text():
     text = select_text.get("1.0", tk.END).strip()
 
     std_list = []
@@ -30,39 +33,46 @@ def get_text(window: tk.Tk, log_text: ScrolledText):
         else:
             std_list.append(text.strip())
             break
-    log_text['state'] = "normal"
-    log_text.insert(1.0, str(std_list) + "\n")
-    log_text['state'] = "disabled"
-    window.update()
+    set_log(str(std_list))
 
     return std_list
 
 
 # 음성 다운로드 시작
-def download_voices(window, sub_p_var, sub_prg_bar, log_text):
-    set_prg_bar(0)
-    std_list = get_text(window, log_text)
+def download_voices():
+    set_prg_bar("main", 0)
+    std_list = get_text()
     std_num = len(std_list)
 
     for i in range(0, std_num):
         std = main.Character(std_list[i], exp_combobox.get(), zip_var.get())
-        std.crawl_voices(window, sub_p_var, sub_prg_bar, log_text)
-        set_prg_bar(round((100 / std_num) * (i+1), 1))
+        std.crawl_voices(set_prg_bar, set_log)
+        set_prg_bar("main", round((100 / std_num) * (i+1), 1))
 
-    log_text['state'] = "normal"
-    log_text.insert(1.0, f"다운로드 완료!\n")
-    log_text['state'] = "disabled"
-    window.update()
+    set_log("다운로드 완료!")
 
     msg_box.showinfo("알림", "다운로드 완료")
 
 
-# 주 프로그레스 바 설정
-def set_prg_bar(value):
-    main_p_var.set(value)
-    prg_text.set(f"{value} %")
+# 프로그레스 바 설정
+def set_prg_bar(type: str, value: float):
+    if type == "main":
+        main_p_var.set(value)
+        prg_text.set(f"{value} %")
 
-    main_prg_bar.update()
+        main_prg_bar.update()
+
+    elif type == "sub":
+        sub_p_var.set(value)
+
+        sub_prg_bar.update()
+
+
+def set_log(text: str):
+    log_text['state'] = "normal"
+    log_text.insert(1.0, text + "\n")
+    log_text['state'] = "disabled"
+    window.update()
 
 
 # 화면 기본 설정
@@ -82,9 +92,10 @@ menubar = tk.Menu(window)
 window.config(menu=menubar)
 file_menu = tk.Menu(menubar, tearoff=0)
 file_menu.add_command(label="Check STD's Name", command=open_std_list)
-file_menu.add_command(label="RVC",
-                      command=lambda: callback("https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI")
-                      )
+file_menu.add_command(
+    label="RVC",
+    command=lambda: webbrowser.open_new("https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI")
+)
 menubar.add_cascade(label="File", menu=file_menu)
 
 
@@ -123,7 +134,7 @@ zip_chkbox.grid(column=2, row=6, sticky=tk.E)
 
 # 다운로드 버튼
 get_button = tk.Button(
-    mainframe, text="DOWNLOAD", command=lambda: download_voices(window, sub_p_var, sub_prg_bar, log_text)
+    mainframe, text="DOWNLOAD", command=start_download
 )
 get_button.grid(column=2, row=7)
 
