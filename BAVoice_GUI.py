@@ -9,7 +9,6 @@ import webbrowser
 import threading
 
 
-# 음성 다운로드 시작
 def start_download():
     download_thread = threading.Thread(target=download_voices)
     download_thread.daemon = True

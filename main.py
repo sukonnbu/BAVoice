@@ -1,5 +1,4 @@
 import os
-import tkinter.messagebox
 import requests
 import convert
 import makezip
@@ -29,7 +28,7 @@ class Character:
             path = f"./{name}/"
 
             if os.path.isdir(path):
-                is_proceed = tkinter.messagebox.askokcancel("확인", f"{path} 폴더가 이미 존재합니다. 이대로 진행하시겠습니까?")
+                is_proceed = msg_box.askokcancel("확인", f"{path} 폴더가 이미 존재합니다. 이대로 진행하시겠습니까?")
                 if not is_proceed:
                     return
             else:
