@@ -17,4 +17,4 @@ def convert_to(path: str, set_prg_bar, set_log, exp_type: str):
             except Exception as e:
                 set_log(f"파일 변환중 오류 발생...\n오류메시지: {e}")
 
-            set_prg_bar("sub", i/len(src_list)*100)
+            set_prg_bar("sub", (i+1)/len(src_list) * 100)

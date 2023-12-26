@@ -1,12 +1,16 @@
-import main
+import convert
+import makezip
 import liststds
-from PIL import Image, ImageTk
+import requests
+import threading
+import webbrowser
+import download_voice
 import tkinter as tk
 from tkinter import ttk
+from bs4 import BeautifulSoup
+from PIL import Image, ImageTk
 from tkinter import messagebox as msg_box
 from tkinter.scrolledtext import ScrolledText
-import webbrowser
-import threading
 
 
 def start_download():
@@ -53,9 +57,25 @@ def download_voices():
     std_list = get_text()
     std_num = len(std_list)
 
+    res = requests.get("https://bluearchive.wiki/wiki/Characters")
+    bs = BeautifulSoup(res.content, 'html.parser')
+    table = bs.find('table').findAll('tr')
+    img_list = [tr.find('img')['alt'] for tr in table]
+
     for i in range(0, std_num):
-        std = main.Character(std_list[i], exp_combobox.get(), zip_var.get())
-        std.crawl_voices(set_prg_bar, set_log)
+        name = std_list[i]
+        if name not in img_list:
+            set_log("오류: 잘못된 학생 이름입니다")
+            msg_box.showerror("오류", "잘못된 학생 이름입니다.\n올바른 학생 이름을 찾으려면 'liststds.py'를 실행하세요.")
+            continue
+
+        path = f"./{name.replace(' ', '_')}/"
+
+        download_voice.crawl_voices(name, set_prg_bar, set_log)
+        convert.convert_to(path, set_prg_bar, set_log, exp_combobox.get())
+        if zip_var.get():
+            makezip.make_zip(path, set_prg_bar, set_log, exp_combobox.get())
+
         set_prg_bar("main", round((100 / std_num) * (i+1), 1))
 
     set_log("다운로드 완료!")
@@ -68,7 +88,7 @@ def download_voices():
 
 
 # 프로그레스 바 설정
-def set_prg_bar(type: str, value: float):
+def set_prg_bar(type:str, value: float):
     if type == "main":
         main_p_var.set(value)
         prg_text.set(f"{value} %")
