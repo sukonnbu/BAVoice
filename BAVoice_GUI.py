@@ -88,7 +88,7 @@ def download_voices():
 
 
 # 프로그레스 바 설정
-def set_prg_bar(type:str, value: float):
+def set_prg_bar(type: str, value: float):
     if type == "main":
         main_p_var.set(value)
         prg_text.set(f"{value} %")
