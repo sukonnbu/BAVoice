@@ -1,0 +1,28 @@
+{
+  "name": "bluearchive_voice_downloader",
+  "private": true,
+  "version": "0.5.0",
+  "type": "module",
+  "scripts": {
+    "go:build": "cd go-backend && go build -o ../src-tauri/binaries/backend-x86_64-pc-windows-msvc.exe && cd ../",
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "tauri:build": "cargo tauri build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/plugin-shell": "~2.3.3",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.3",
+    "vue-tsc": "^2.1.10"
+  }
+}
